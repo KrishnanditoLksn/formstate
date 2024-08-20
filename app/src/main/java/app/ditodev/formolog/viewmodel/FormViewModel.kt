@@ -1,14 +1,17 @@
 package app.ditodev.formolog.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import app.ditodev.formolog.data.FormUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class FormViewModel : ViewModel() {
-    private val _name = mutableStateOf("")
-    val name: State<String> = _name
+    private val _name = MutableStateFlow(FormUiState())
+    var nameState: StateFlow<FormUiState> = _name.asStateFlow()
+        private set
 
     fun onFormNameChange(nameForm: String) {
-        _name.value = nameForm
+        _name.value = _name.value.copy(name = nameForm)
     }
 }
